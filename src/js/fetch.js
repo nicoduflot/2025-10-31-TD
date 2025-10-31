@@ -17,6 +17,7 @@ https://dummyjson.com/products/categories
 produit par catégorie
 https://dummyjson.com/products/category/smartphones
 */
+import productsList from "./Products.js";
 
 const options = {
     requestType: '',
@@ -27,31 +28,47 @@ const options = {
     skip: '',
 };
 
-export default async function getData(options = {requestType:''}){
+export default async function getData(options = { requestType: '' }) {
     let baseUrl = 'https://dummyjson.com/products';
-    switch(options.requestType){
+    switch (options.requestType) {
         case 'id':
             baseUrl = `${baseUrl}/${options.id}`;
-        break;
+            break;
         case 'categories':
             baseUrl = `${baseUrl}/categories`;
-        break;
+            break;
         case 'pBCategory':
             baseUrl = `${baseUrl}/category/${options.pBCategory}`;
-        break;
+            break;
         default:
     }
-    const data = await(fetchUrl(baseUrl));
+    const data = await (fetchUrl(baseUrl, options.requestType));
     return data;
 }
 
-function fetchUrl(url){
+function fetchUrl(url, requestType) {
     fetch(url)
-    .then(response=>response.json())
-    .then(data=>{
-        console.log(data);
-        return data
-    })
-    .catch(error=>console.error(error.message))
-    .finally(()=>console.log('Requête terminée'));
+        .then(response => response.json())
+        .then(data => {
+            /*console.log(data);*/
+            let produits = null;
+            switch (requestType) {
+                case 'id':
+                    //baseUrl = `${baseUrl}/${options.id}`;
+                    //return produits;
+                    break;
+                case 'categories':
+                    //baseUrl = `${baseUrl}/categories`;
+                    //return produits;
+                    break;
+                case 'pBCategory':
+                    //baseUrl = `${baseUrl}/category/${options.pBCategory}`;
+                    //return produits;
+                    break;
+                default:
+            }
+            produits = productsList(data);
+        })
+        .catch(error => console.error(error.message))
+        .finally(() => console.log('Requête terminée'));
 }
