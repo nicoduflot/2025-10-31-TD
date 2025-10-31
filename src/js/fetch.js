@@ -42,31 +42,44 @@ export default async function getData(options = { requestType: '' }) {
             break;
         default:
     }
-    const data = await (fetchUrl(baseUrl, options.requestType));
+    
+    if(options.skip && !options.limit){
+        baseUrl = baseUrl + `?skip=${options.skip}`;
+    }
+    if(options.skip && options.limit){
+        baseUrl = baseUrl + `?skip=${options.skip}&limit=${options.limit}`;
+    }
+    if(!options.skip && options.limit){
+        baseUrl = baseUrl + `?limit=${options.limit}`;
+    }
+    /*console.log(baseUrl);*/
+    
+    const data = await (fetchUrl(baseUrl, options));
     return data;
 }
 
-function fetchUrl(url, requestType) {
+function fetchUrl(url, options) {
     /*console.log(url);*/
-
+    /*console.log(options);*/
+    const requestType = options.requestType;
     fetch(url)
         .then(response => response.json())
         .then(data => {
             /*console.log(data);*/
-            let produits = null;
+            //let produits = null;
             /*console.log(requestType);*/
             switch (requestType) {
                 case 'id':
-                    productsList(data);
+                    productsList(data, options);
                     break;
                 case 'categories':
                     categories(data);
                     break;
                 case 'pBCategory':
-                    productsList(data);
+                    productsList(data, options);
                     break;
                 default:
-                    productsList(data);
+                    productsList(data, options);
             }
         })
         .catch(error => console.error(error.message))

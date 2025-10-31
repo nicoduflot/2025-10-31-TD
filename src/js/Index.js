@@ -49,5 +49,5 @@ window.addEventListener('DOMContentLoaded', ()=>{
     /*console.log(Produit);*/
 
     getData({requestType: 'categories'});
-    getData();
+    getData({ requestType: '', limit: 12 });
 });
