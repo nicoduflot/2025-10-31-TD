@@ -17,7 +17,7 @@ https://dummyjson.com/products/categories
 produit par catégorie
 https://dummyjson.com/products/category/smartphones
 */
-import productsList from "./Products.js";
+import productsList, { categories } from "./Products.js";
 
 const options = {
     requestType: '',
@@ -48,28 +48,26 @@ export default async function getData(options = { requestType: '' }) {
 
 function fetchUrl(url, requestType) {
     console.log(url);
-    
+
     fetch(url)
         .then(response => response.json())
         .then(data => {
             /*console.log(data);*/
             let produits = null;
+            console.log(requestType);
             switch (requestType) {
                 case 'id':
-                    //baseUrl = `${baseUrl}/${options.id}`;
-                    //return produits;
+                    productsList(data);
                     break;
                 case 'categories':
-                    baseUrl = `${baseUrl}/categories`;
-                    //return produits;
+                    categories(data);
                     break;
                 case 'pBCategory':
-                    //baseUrl = `${baseUrl}/category/${options.pBCategory}`;
-                    //return produits;
+                    productsList(data);
                     break;
                 default:
+                    productsList(data);
             }
-            produits = productsList(data);
         })
         .catch(error => console.error(error.message))
         .finally(() => console.log('Requête terminée'));

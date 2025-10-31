@@ -57,3 +57,19 @@ export default function productsList(data){
     document.getElementById('productList').appendChild(retour);
     //document.getElementById('productList').innerHTML = listProducts;
 }
+
+export function categories(categories){
+    console.log(categories);
+    document.getElementById('categories').innerHTML = '';
+    categories.map(function(categorie){
+        const li = document.createElement('li');
+        li.classList.add('nav-item');
+        const a = document.createElement('a');
+        a.classList.add('nav-link');
+        a.append(document.createTextNode(`${categorie.name}`));
+        a.dataset.catUrl = categorie.url;
+        a.setAttribute('href', '#');
+        li.append(a);
+        document.getElementById('categories').appendChild(li);
+    });
+}

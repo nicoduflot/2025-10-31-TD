@@ -47,8 +47,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
     }
 
     /*console.log(Produit);*/
-    getData();
 
+    getData({requestType: 'categories'});
+    getData();
     document.querySelectorAll('.productLink').forEach(function(link){
         link.addEventListener('click', function(event){
             event.preventDefault();
