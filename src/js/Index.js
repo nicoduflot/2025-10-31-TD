@@ -50,11 +50,4 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
     getData({requestType: 'categories'});
     getData();
-    document.querySelectorAll('.productLink').forEach(function(link){
-        link.addEventListener('click', function(event){
-            event.preventDefault();
-            console.log(link);
-            
-        });
-    });
 });

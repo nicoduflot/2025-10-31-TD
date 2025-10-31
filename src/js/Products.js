@@ -31,7 +31,7 @@ export default function productsList(data){
         link.append(document.createTextNode(`${produit.price} €`));
         link.addEventListener('click', function(event){
             event.preventDefault();
-            console.log(link.dataset.idproduct);
+            /*console.log(link.dataset.idproduct);*/
             getData({
                 requestType: 'id',
                 id:link.dataset.idproduct
@@ -59,7 +59,7 @@ export default function productsList(data){
 }
 
 export function categories(categories){
-    console.log(categories);
+    /*console.log(categories);*/
     document.getElementById('categories').innerHTML = '';
     categories.map(function(categorie){
         const li = document.createElement('li');
@@ -67,8 +67,13 @@ export function categories(categories){
         const a = document.createElement('a');
         a.classList.add('nav-link');
         a.append(document.createTextNode(`${categorie.name}`));
-        a.dataset.catUrl = categorie.url;
+        a.dataset.catSlug = categorie.slug;
         a.setAttribute('href', '#');
+        a.addEventListener('click', function(event){
+            event.preventDefault();
+            /*console.log(a.dataset.catSlug);*/
+            getData({requestType: 'pBCategory', pBCategory: a.dataset.catSlug });
+        });
         li.append(a);
         document.getElementById('categories').appendChild(li);
     });

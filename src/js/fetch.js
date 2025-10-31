@@ -47,14 +47,14 @@ export default async function getData(options = { requestType: '' }) {
 }
 
 function fetchUrl(url, requestType) {
-    console.log(url);
+    /*console.log(url);*/
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
             /*console.log(data);*/
             let produits = null;
-            console.log(requestType);
+            /*console.log(requestType);*/
             switch (requestType) {
                 case 'id':
                     productsList(data);
