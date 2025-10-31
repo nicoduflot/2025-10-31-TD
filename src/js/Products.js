@@ -26,6 +26,7 @@ export default function productsList(data){
         const footer = document.createElement('footer');
         const link = document.createElement('a');
         link.classList.add('productLink');
+        link.setAttribute('href', '#');
         link.dataset.idproduct = produit.id;
         link.append(document.createTextNode(`${produit.price} €`));
         link.addEventListener('click', function(event){
@@ -45,5 +46,14 @@ export default function productsList(data){
         footer.append(link);
         document.getElementById('productList').appendChild(div);
     });
+    const retour = document.createElement('a');
+    retour.append(document.createTextNode('Tous les produits'));
+    retour.classList.add('link');
+    retour.setAttribute('href', '#');
+    retour.addEventListener('click', function(event){
+        event.preventDefault();
+        getData();
+    });
+    document.getElementById('productList').appendChild(retour);
     //document.getElementById('productList').innerHTML = listProducts;
 }
