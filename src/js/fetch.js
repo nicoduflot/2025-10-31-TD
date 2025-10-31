@@ -47,6 +47,8 @@ export default async function getData(options = { requestType: '' }) {
 }
 
 function fetchUrl(url, requestType) {
+    console.log(url);
+    
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -58,7 +60,7 @@ function fetchUrl(url, requestType) {
                     //return produits;
                     break;
                 case 'categories':
-                    //baseUrl = `${baseUrl}/categories`;
+                    baseUrl = `${baseUrl}/categories`;
                     //return produits;
                     break;
                 case 'pBCategory':
