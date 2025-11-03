@@ -54,6 +54,7 @@ export default async function getData(options = { requestType: '' }) {
         baseUrl = baseUrl + `?limit=${options.limit}`;
     }
     const data = await (fetchUrl(baseUrl, options));
+    
     return data;
 }
 
@@ -76,6 +77,6 @@ function fetchUrl(url, options) {
                     productsList(data, options);
             }
         })
-        .catch(error => console.error(error.message))
-        .finally(() => console.log('Requête terminée'));
+        .catch(error => {})
+        .finally(() => {});
 }

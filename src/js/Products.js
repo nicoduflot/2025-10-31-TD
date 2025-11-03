@@ -16,6 +16,10 @@ export default function productsList(data, options = {}) {
     retour.addEventListener('click', function (event) {
         event.preventDefault();
         getData({ requestType: '', limit: 12 });
+        const links = document.querySelectorAll('#categories a');
+        for(let link of links){
+            link.classList.remove('active');
+        }
     });
 
     /* on récupère le template selon le nombre de produits : la fiche un seul produit pour un produit unique, la fiche mini produit pour une liste */
@@ -69,23 +73,35 @@ export default function productsList(data, options = {}) {
     retourBottom.addEventListener('click', function (event) {
         event.preventDefault();
         getData({ requestType: '', limit: 12 });
+        const links = document.querySelectorAll('#categories a');
+        for(let link of links){
+            link.classList.remove('active');
+        }
     });
     document.getElementById('productList').appendChild(retourBottom);
 }
 
 export function categories(categories) {
+    const template = templates.categorie;
+    
     document.getElementById('categories').innerHTML = '';
     categories.map(function (categorie) {
-        const li = document.createElement('li');
-        li.classList.add('nav-item');
-        const a = document.createElement('a');
-        a.classList.add('nav-link');
+        const templateCat = document.importNode(template.content, true);
+        const li = templateCat.querySelector('li');
+        //li.classList.add('nav-item');
+        const a = templateCat.querySelector('a');
+        //a.classList.add('nav-link');
         a.append(document.createTextNode(`${categorie.name}`));
         a.dataset.catSlug = categorie.slug;
-        a.setAttribute('href', '#');
+        //a.setAttribute('href', '#');
         a.addEventListener('click', function (event) {
             event.preventDefault();
             getData({ requestType: 'pBCategory', pBCategory: a.dataset.catSlug, limit: 12 });
+            const links = document.querySelectorAll('#categories a');
+            for(let link of links){
+                link.classList.remove('active');
+            }
+            this.classList.add('active');
         });
         li.append(a);
         document.getElementById('categories').appendChild(li);
