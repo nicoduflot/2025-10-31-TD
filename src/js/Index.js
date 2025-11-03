@@ -1,6 +1,16 @@
 /* on importe les modules dans le fichier de module principal */
-
+import { loadTemplates } from './templates.js';
 import getData from './fetch.js';
+
+// Enveloppe tout dans une fonction async
+async function init() {
+    // Charge les templates en premier
+    await loadTemplates();
+    
+    // Ensuite lance l'application
+    getData({requestType: 'categories'});
+    getData({ requestType: '', limit: 12 });
+}
 
 window.addEventListener('DOMContentLoaded', ()=>{
     const Toto = {
@@ -47,6 +57,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
       }
     }
 
+    /*
     getData({requestType: 'categories'});
     getData({ requestType: '', limit: 12 });
+    */
+   init();
 });
