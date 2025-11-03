@@ -29,7 +29,8 @@ const options = {
 };
 
 export default async function getData(options = { requestType: '' }) {
-    let baseUrl = 'https://dummyjson.com/products';
+    //let baseUrl = 'https://dummyjson.com/products';
+    let baseUrl = 'http://localhost:8888/products';
     switch (options.requestType) {
         case 'id':
             baseUrl = `${baseUrl}/${options.id}`;
