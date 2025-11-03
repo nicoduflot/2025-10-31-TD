@@ -1,6 +1,7 @@
 /* fonctions d'afffichage des produits */
 import getData from './fetch.js';
 
+
 export default function productsList(data, options = {}) {
     const produits = (data.products) ? data.products : [data];
     const total = (data.products) ? data.total : 1;
@@ -16,58 +17,65 @@ export default function productsList(data, options = {}) {
         event.preventDefault();
         getData({ requestType: '', limit: 12 });
     });
-    document.getElementById('productList').appendChild(retour);
-
-    const divPagination = document.createElement('div');
-    divPagination.appendChild(pagination(total, limit, skip, options));
-    divPagination.classList.add('overflow-x-auto');
-    document.getElementById('productList').appendChild(divPagination);
-
+    
     /* on récupère le template selon le nombre de produits : la fiche un seul produit pour un produit unique, la fiche mini produit pour une liste */
     const template = (total === 1) ? document.querySelector('#productTemplate') : document.querySelector('#miniProductTemplate');
+    const templateType = (total === 1) ? 'productTemplate.html' : 'miniProductTemplate.html';
     /* on intègre les données dans le template selectionné dans la boucle */
-    produits.map(produit => {
-        const productTemplate = document.importNode(template.content, true);
-        const title = productTemplate.querySelector('#productTitle');
-        const category = productTemplate.querySelector('a#productCategory');
-        const productDescription = productTemplate.querySelector('#productDescription');
-        const productThumbnail = productTemplate.querySelector('#productThumbnail');
-        const productPrice = productTemplate.querySelector('#productPrice');
-        title.append(document.createTextNode(produit.title));
-        category.append(document.createTextNode(produit.category));
-        category.addEventListener('click', event => {
-            event.preventDefault();
-            getData({ requestType: 'pBCategory', pBCategory: produit.category, limit: options.limit });
-        });
-        productDescription.append(document.createTextNode(produit.description));
-        productThumbnail.setAttribute('src', produit.thumbnail);
-        productPrice.append(document.createTextNode(`${produit.price} €`));
-        productPrice.dataset.idproduct = produit.id;
-        productPrice.addEventListener('click', function (event) {
-            event.preventDefault();
-            getData({
-                requestType: 'id',
-                id: productPrice.dataset.idproduct
+    fetch(`./src/template/${templateType}`)
+    .then(response=>response.text())
+    .then(data=>{
+        document.getElementById('productList').appendChild(retour);
+        const divPagination = document.createElement('div');
+        divPagination.appendChild(pagination(total, limit, skip, options));
+        divPagination.classList.add('overflow-x-auto');
+        document.getElementById('productList').appendChild(divPagination);
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const templateElement = doc.querySelector('template');
+        produits.map(produit => {
+            const productTemplate = document.importNode(templateElement.content, true);
+            const title = productTemplate.querySelector('#productTitle');
+            const category = productTemplate.querySelector('a#productCategory');
+            const productDescription = productTemplate.querySelector('#productDescription');
+            const productThumbnail = productTemplate.querySelector('#productThumbnail');
+            const productPrice = productTemplate.querySelector('#productPrice');
+            title.append(document.createTextNode(produit.title));
+            category.append(document.createTextNode(produit.category));
+            category.addEventListener('click', event => {
+                event.preventDefault();
+                getData({ requestType: 'pBCategory', pBCategory: produit.category, limit: options.limit });
             });
+            productDescription.append(document.createTextNode(produit.description));
+            productThumbnail.setAttribute('src', produit.thumbnail);
+            productPrice.append(document.createTextNode(`${produit.price} €`));
+            productPrice.dataset.idproduct = produit.id;
+            productPrice.addEventListener('click', function (event) {
+                event.preventDefault();
+                getData({
+                    requestType: 'id',
+                    id: productPrice.dataset.idproduct
+                });
+            });
+    
+            document.getElementById('productList').appendChild(productTemplate);
         });
 
-        document.getElementById('productList').appendChild(productTemplate);
+        const divPaginationBottom = document.createElement('div');
+        divPaginationBottom.appendChild(pagination(total, limit, skip, options));
+        divPaginationBottom.classList.add('overflow-x-auto');
+        document.getElementById('productList').appendChild(divPaginationBottom);
+    
+        const retourBottom = document.createElement('a');
+        retourBottom.append(document.createTextNode('Tous les produits'));
+        retourBottom.classList.add('link');
+        retourBottom.setAttribute('href', '#');
+        retourBottom.addEventListener('click', function (event) {
+            event.preventDefault();
+            getData({ requestType: '', limit: 12 });
+        });
+        document.getElementById('productList').appendChild(retourBottom);
     });
-
-    const divPaginationBottom = document.createElement('div');
-    divPaginationBottom.appendChild(pagination(total, limit, skip, options));
-    divPaginationBottom.classList.add('overflow-x-auto');
-    document.getElementById('productList').appendChild(divPaginationBottom);
-
-    const retourBottom = document.createElement('a');
-    retourBottom.append(document.createTextNode('Tous les produits'));
-    retourBottom.classList.add('link');
-    retourBottom.setAttribute('href', '#');
-    retourBottom.addEventListener('click', function (event) {
-        event.preventDefault();
-        getData({ requestType: '', limit: 12 });
-    });
-    document.getElementById('productList').appendChild(retourBottom);
 }
 
 export function categories(categories) {
@@ -92,7 +100,6 @@ export function categories(categories) {
 function pagination(total, limit = 12, skip, options = {}) {
     /* récupération du template de la pagination */
     const template = document.querySelector('#paginationTemplate');
-    console.log(template);
     
     let pages = (Math.ceil(total / limit));
     const ul = document.createElement('ul');

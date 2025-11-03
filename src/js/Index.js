@@ -1,4 +1,5 @@
 /* on importe les modules dans le fichier de module principal */
+
 import getData from './fetch.js';
 
 window.addEventListener('DOMContentLoaded', ()=>{
