@@ -7371,5 +7371,14 @@ progress {
     display: none !important;
   }
 }
+@media screen and (min-width: 768px) {
+  #categories li {
+    width: 100%;
+  }
+  .left-column {
+    height: 80vh;
+    overflow-y: auto;
+  }
+}
 
 /*# sourceMappingURL=style.css.map */

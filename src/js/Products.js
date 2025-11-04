@@ -5,7 +5,7 @@ import { templates } from './templates.js';
 export default function productsList(data, options = {}) {
     const produits = (data.products) ? data.products : [data];
     const total = (data.products) ? data.total : 1;
-    const limit = (data.products) ? 12 : 1;
+    const limit = (data.products) ? 15 : 1;
     const skip = (data.products) ? data.skip : 0;
     document.getElementById('productList').innerHTML = '';
 
@@ -15,7 +15,7 @@ export default function productsList(data, options = {}) {
     retour.setAttribute('href', '#');
     retour.addEventListener('click', function (event) {
         event.preventDefault();
-        getData({ requestType: '', limit: 12 });
+        getData({ requestType: '', limit: 15 });
         const links = document.querySelectorAll('#categories a');
         for(let link of links){
             link.classList.remove('active');
@@ -47,7 +47,8 @@ export default function productsList(data, options = {}) {
             getData({ requestType: 'pBCategory', pBCategory: produit.category, limit: options.limit });
         });
         productDescription.append(document.createTextNode(produit.description));
-        productThumbnail.setAttribute('src', produit.thumbnail);
+        let srcAttribute = (total === 1) ? produit.images[0] : produit.thumbnail;
+        productThumbnail.setAttribute('src', srcAttribute);
         productPrice.append(document.createTextNode(`${produit.price} €`));
         productPrice.dataset.idproduct = produit.id;
         productPrice.addEventListener('click', function (event) {
@@ -70,9 +71,10 @@ export default function productsList(data, options = {}) {
     retourBottom.append(document.createTextNode('Tous les produits'));
     retourBottom.classList.add('link');
     retourBottom.setAttribute('href', '#');
+    retourBottom.classList.add('mb-5');
     retourBottom.addEventListener('click', function (event) {
         event.preventDefault();
-        getData({ requestType: '', limit: 12 });
+        getData({ requestType: '', limit: 15 });
         const links = document.querySelectorAll('#categories a');
         for(let link of links){
             link.classList.remove('active');
@@ -96,7 +98,7 @@ export function categories(categories) {
         //a.setAttribute('href', '#');
         a.addEventListener('click', function (event) {
             event.preventDefault();
-            getData({ requestType: 'pBCategory', pBCategory: a.dataset.catSlug, limit: 12 });
+            getData({ requestType: 'pBCategory', pBCategory: a.dataset.catSlug, limit: 15 });
             const links = document.querySelectorAll('#categories a');
             for(let link of links){
                 link.classList.remove('active');
@@ -108,7 +110,7 @@ export function categories(categories) {
     });
 }
 
-function pagination(total, limit = 12, skip, options = {}) {
+function pagination(total, limit = 15, skip, options = {}) {
     /* récupération du template de la pagination */
     const template = templates.pagination;
 

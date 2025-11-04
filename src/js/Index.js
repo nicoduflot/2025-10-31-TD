@@ -9,7 +9,7 @@ async function init() {
     
     // Ensuite lance l'application
     getData({requestType: 'categories'});
-    getData({ requestType: '', limit: 12 });
+    getData({ requestType: '', limit: 15 });
 }
 
 window.addEventListener('DOMContentLoaded', ()=>{

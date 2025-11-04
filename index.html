@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,26 +8,32 @@
     <script src="./src/js/bootstrap.bundle.js"></script>
     <script src="./src/js/Index.js" type="module"></script>
 </head>
-
 <body>
-    <header>
-        <div class="container">
+    <header class="bg-dark text-white pt-2 pb-4" data-bs-theme="dark">
+        <div class="container-fluid">
             <h1>Mes produits</h1>
         </div>
     </header>
-    <nav>
-        <div class="container">
-            <ul class="nav nav-pills" id="categories">
-
-            </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-2 bg-dark" data-bs-theme="dark">
+                <nav class="left-column">
+                        <ul class="nav nav-pills" id="categories">
+                        </ul>
+                </nav>
+            </div>
+            <div class="col-12 col-md-9 col-lg-10">
+                <main>
+                    <section class="row" id="productList">
+                    </section>
+                </main>
+            </div>
         </div>
-    </nav>
-    <main class="container">
-        <section class="row" id="productList">
-
-        </section>
-    </main>
+    </div>
+    <footer class="bg-dark text-white py-2 fixed-bottom" data-bs-theme="dark">
+        <div class="container-fluid">
+            &copy; DAWAN - 2025/10/31
+        </div>
+    </footer>
 </body>
-
-
 </html>
