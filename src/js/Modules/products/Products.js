@@ -90,12 +90,9 @@ export function categories(categories) {
     categories.map(function (categorie) {
         const templateCat = document.importNode(template.content, true);
         const li = templateCat.querySelector('li');
-        //li.classList.add('nav-item');
         const a = templateCat.querySelector('a');
-        //a.classList.add('nav-link');
         a.append(document.createTextNode(`${categorie.name}`));
         a.dataset.catSlug = categorie.slug;
-        //a.setAttribute('href', '#');
         a.addEventListener('click', function (event) {
             event.preventDefault();
             getData({ requestType: 'pBCategory', pBCategory: a.dataset.catSlug, limit: 15 });

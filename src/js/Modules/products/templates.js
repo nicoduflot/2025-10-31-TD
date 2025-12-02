@@ -7,10 +7,10 @@ export const templates = {
 
 export async function loadTemplates() {
     const [productResponse, miniProductResponse, paginationResponse, categorieResponse] = await Promise.all([
-        fetch('./src/template/productTemplate.html'),
-        fetch('./src/template/miniProductTemplate.html'),
-        fetch('./src/template/paginationTemplate.html'),
-        fetch('./src/template/categorieTemplate.html'),
+        fetch('./src/template/Products/productTemplate.html'),
+        fetch('./src/template/Products/miniProductTemplate.html'),
+        fetch('./src/template/Products/paginationTemplate.html'),
+        fetch('./src/template/Products/categorieTemplate.html'),
     ]);
     
     const [productHTML, miniProductHTML, paginationHTML, categorieHTML] = await Promise.all([
